@@ -1,0 +1,41 @@
+---
+
+- name: Add common groups
+  group:
+    name={{ item }}
+    state=present
+  with_items: "{{ common_users_groups|default([]) }}"
+  tags:
+    - usermanagement
+
+- name: Add users
+  user:
+    name={{ item.name }}
+    comment="{{ item.comment }}"
+    shell={{ item.shell }}
+    groups={{ ",".join(item.groups) }}
+    state=present
+  with_items: "{{ common_users_users|default([]) }}"
+  tags:
+    - usermanagement
+
+- name: Add public SSH authorized keys per user
+  authorized_key:
+    user={{ item[0].name }}
+    key="{{ item[1] }}"
+  with_subelements:
+    - "{{ common_users_users|default([]) }}"
+    - ssh_key
+  tags:
+    - usermanagement
+
+- name: Allow passwordless sudo for sudo users
+  lineinfile:
+    "dest=/etc/sudoers
+    state=present
+    regexp='^{{ item }}'
+    insertafter=EOF
+    line='{{ item }} ALL=(ALL) NOPASSWD: ALL'"
+  with_items: "{{ common_users_sudo_users|default([]) }}"
+  tags:
+    - usermanagement

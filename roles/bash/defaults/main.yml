@@ -1,0 +1,5 @@
+---
+
+# default variables
+bash_users: []
+force_user_bash_profile: false

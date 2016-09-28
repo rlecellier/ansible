@@ -1,0 +1,59 @@
+---
+
+- name: Get /etc/bash.bashrc file stat
+  stat: path=/etc/bash.bashrc
+  register: file
+  ignore_errors: True
+
+- name: Save /etc/bash.bashrc.origine
+  copy: src=/etc/bash.bashrc dest=/etc/bash.bashrc.origine
+  when: file.stat.exists
+
+- name : Update configuration file - /etc/bash.bashrc
+  become: True
+  template :
+    src   : "{{ role_path }}/templates/bashrc.sh"
+    dest  : /etc/bash.bashrc
+    owner : root
+    group : root
+    mode  : 0644
+
+- name: Get /etc/profile file stat
+  stat: path=/etc/profile
+  register: file
+  ignore_errors: True
+
+- name: Save /etc/profile.origine
+  copy: src=/etc/profile dest=/etc/profile.origine
+  when: file.stat.exists
+
+- name : Update configuration file - /etc/profile
+  become: True
+  template :
+    src   : "{{ role_path }}/templates/profile.sh"
+    dest  : /etc/profile
+    owner : root
+    group : root
+    mode  : 0644
+
+- name : Update configuration file - /home/{{ item.name }}/.bashrc
+  become: True
+  template :
+    src   : "{{ role_path }}/templates/user_profile.sh"
+    dest  : "/home/{{ item.name }}/profile"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode  : 0644
+  when: "{{ force_user_bash_profile }}"
+  with_items: "{{ bash_users|default([]) }}"
+
+- name : Update configuration file - /home/{{ item.name }}/.profile
+  become: True
+  template :
+    src   : "{{ role_path }}/templates/user_profile.sh"
+    dest  : "/home/{{ item.name }}/.profile"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode  : 0644
+  when: "{{ force_user_bash_profile }}"
+  with_items: "{{ bash_users|default([]) }}"

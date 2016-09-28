@@ -1,0 +1,15 @@
+---
+
+galaxy_info:
+  author: Romain Le Cellier
+  description: Configure vim
+  license: GPLv3
+  min_ansible_version: 1.8
+  platforms:
+    - name: Debian
+      versions:
+        - jessie
+        - wheezy
+
+  categories: []
+dependencies: []

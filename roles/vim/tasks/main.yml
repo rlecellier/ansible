@@ -1,0 +1,46 @@
+---
+- name: Ensure vim-tiny isn't installed
+  apt:
+    pkg: vim-tiny
+    state: absent
+
+- name: Ensure vim is the latest version
+  apt:
+    pkg: vim
+    state: present
+    update_cache: yes
+
+- name: Vim create home directories
+  command: "mkdir -p /home/{{ item }}/.vim/config /home/{{ item }}/.vim/autoload /home/{{ item }}/.vim/bundle /home/{{ item }}/.vim/colors"
+  become: True
+  become_user: "{{ item }}"
+  with_items: "{{ vim_users|default([]) }}"
+
+- name: Install vim pathogen
+  command: "curl -LSso /home/{{ item }}/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim"
+  become: True
+  become_user: "{{ item }}"
+  with_items: "{{ vim_users|default([]) }}"
+
+- name: Install vim colorscheme onedark
+  command: "curl -LSso /home/{{ item }}/.vim/colors/onedark.vim https://github.com/joshdick/onedark.vim/blob/master/colors/onedark.vim"
+  become: True
+  become_user: "{{ item }}"
+  with_items: "{{ vim_users|default([]) }}"
+
+- name : Update configuration file - /home/{{ item }}/.vim/config/settings.vim
+  template :
+    src   : "{{ role_path }}/templates/settings.vim"
+    dest  : "/home/{{ item }}/.vim/config/settings.vim"
+  become: True
+  become_user: "{{ item }}"
+  with_items: "{{ vim_users|default([]) }}"
+
+- name : Update configuration file - /home/{{ item }}/.vimrc
+  template :
+    src   : "{{ role_path }}/templates/vimrc"
+    dest  : "/home/{{ item }}/.vimrc"
+  become: True
+  become_user: "{{ item }}"
+  with_items: "{{ vim_users|default([]) }}"
+

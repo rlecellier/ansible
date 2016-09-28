@@ -1,0 +1,53 @@
+---
+
+- name: Set hostname
+  hostname: name="{{ hostname|default("bootstrapped") }}"
+  when: ansible_distribution != 'Kali'
+  tags:
+    - hostname
+
+- name: Set hosts file
+  lineinfile: >
+    dest=/etc/hosts
+    state=present
+    regexp='^127.0.1.1'
+    line='127.0.1.1 {{ hostname|default("bootstrapped") }}'
+  tags:
+    - hostname
+
+- name: Check current timezone
+  shell: cat /etc/timezone
+  register: current_zone
+  changed_when: current_zone.stdout != "{{ timezone }}"
+  tags:
+    - timezone
+
+- name: Modify timezone variables
+  copy:
+    content={{ timezone }}
+    dest=/etc/timezone
+    owner=root
+    group=root
+    mode=0644
+  when: not check_mode and current_zone.stdout != "{{ timezone }}"
+  notify:
+    - update timezone
+  tags:
+    - timezone
+
+- name: Disable grub timeout
+  lineinfile:
+    dest=/etc/default/grub
+    regexp="^{{ item.name }}="
+    line="{{ item.name }}={{ item.value }}"
+    state=present
+  with_items:  "{{ grub_settings|default([]) }}"
+  register: grub_config
+  tags:
+    - grub
+
+- name: Reload grub config
+  command: update-grub 2>/dev/null
+  when: grub_config | changed
+  tags:
+    - grub

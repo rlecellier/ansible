@@ -1,0 +1,2 @@
+[servers]
+loki hostname=loki

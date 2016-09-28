@@ -1,0 +1,14 @@
+" {{ ansible_managed }}
+
+set nocompatible
+runtime! config/**/*.vim
+runtime! colors/**/*.vim
+
+" Initialisation de pathogen
+call pathogen#infect()
+call pathogen#helptags()
+
+set background=dark
+colorscheme onedark
+
+let g:onedark_termcolors=256

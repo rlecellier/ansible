@@ -1,0 +1,10 @@
+---
+
+check_mode: true
+grub_settings:
+  - name: "GRUB_TIMEOUT"
+    value: "0"
+  - name: "GRUB_RECORDFAIL_TIMEOUT"
+    value: "0"
+
+timezone: Etc/UTC

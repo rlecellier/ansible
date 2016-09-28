@@ -1,0 +1,7 @@
+---
+
+- name: Ensure git is the latest version
+  apt: name=git update_cache=yes
+
+- name: Set git global configuration
+  script: "{{ role_path }}/files/git-config.sh"
