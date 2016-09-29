@@ -1,0 +1,26 @@
+---
+
+- name: Ensure ufw and iptables are the latests versions
+  apt:
+    name={{ item }}
+    update_cache=yes
+    cache_valid_time=86400
+    install-recommends=no
+    state=present
+  with_items:
+    - iptables
+    - ufw
+
+- name: Allow ssh through firewall
+  ufw: rule=allow proto=tcp port={{ item }}
+  ignore_errors: "{{ check_mode }}"
+  notify:
+    - reload ufw
+  with_items: "{{ ufw_tcp_allow|default([22]) }}"
+
+- name: Make sure firewall is up and running, and denying
+  ufw: state=enabled policy=deny
+  ignore_errors: "{{ check_mode }}"
+  notify:
+    - reload ufw
+

@@ -1,0 +1,32 @@
+---
+
+- name: Ensure fail2ban is the latest version
+  apt: name=fail2ban update_cache=yes
+
+- name : Update configuration file - /etc/fail2ban/fail2ban.conf
+  become: True
+  template :
+    src   : "{{ role_path }}/templates/fail2ban.conf.j2"
+    dest  : /etc/fail2ban/fail2ban.conf
+    owner : root
+    group : root
+    mode  : 0644
+  notify: restart fail2ban
+
+- name : Update configuration file - /etc/fail2ban/jail.local
+  become: True
+  template :
+    src   : "{{ role_path }}/templates/jail.local.j2"
+    dest  : /etc/fail2ban/jail.local
+    owner : root
+    group : root
+    mode  : 0644
+  notify: restart fail2ban
+
+- name : Start and enable service
+  become: True
+  service :
+    name    : "{{ fail2ban_service_name }}"
+    state   : "{{ fail2ban_service_state }}"
+    enabled : "{{ fail2ban_service_enabled }}"
+

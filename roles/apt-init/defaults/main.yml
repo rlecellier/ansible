@@ -1,0 +1,27 @@
+---
+# defaults file for common-apt
+
+common_apt_packages:
+  - ca-certificates
+  - curl
+  - locate
+  - lsof
+  - ntp
+  - openssl
+  - sudo
+  - screen
+  - unzip
+  - wget
+  - pwgen
+common_apt_packages_remove:
+  - bluez
+  - crda
+  - cups
+  - iso-codes
+  - iw
+  - libiw30
+  - task-laptop
+  - wireless-regdb
+  - wireless-tools
+  - wpasupplicant
+common_apt_pip_packages: []

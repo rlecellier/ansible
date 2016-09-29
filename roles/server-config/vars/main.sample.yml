@@ -1,0 +1,5 @@
+---
+
+check_mode: true
+grub_settings: []
+timezone: Etc/UTC

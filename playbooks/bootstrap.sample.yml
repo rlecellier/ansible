@@ -1,0 +1,16 @@
+---
+- name: Boostrap all servers
+  hosts: all
+
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  roles:
+    - apt-init
+    - users
+    - ssh
+    - ufw
+    - fail2ban
+    # this role do basic server configuration: timezone, hostname, etc...)
+    - server-config

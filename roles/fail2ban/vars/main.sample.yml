@@ -1,0 +1,24 @@
+---
+check_mode: true
+
+fail2ban_ignoreips:
+  - 127.0.0.1/8
+  # example : add the ip of your office
+
+# 3 days
+fail2ban_bantime: 259200
+fail2ban_maxretry: 5
+# one houre
+fail2ban_findtime: 3600
+
+fail2ban_destemail: name@host.tld
+fail2ban_services:
+  - name: ssh
+    enabled: true
+    port: ssh
+    filter: sshd
+    logpath: /var/log/auth.log
+    maxretry: 4
+    # one houre
+    findtime: 3600
+

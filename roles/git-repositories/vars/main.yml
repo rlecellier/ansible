@@ -1,0 +1,18 @@
+---
+# defaults file for bootstrap
+groups:
+  - sudo
+users:
+  - name: "rlecellier"
+    comment: 'Romain Le Cellier'
+    groups:
+      - 'adm'
+      - 'sudo'
+    shell: "/bin/bash"
+    password: "LbKxcdJ7YLwH"
+    ssh_key:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxkx4M6CSjsIve9OurgcEhXs1o1PW5mXcGes6XJFZMMVZ7KXdQpN3qrkbAlR6TYMDxGOIcVMhMunPEOhZeURMn+r699Nj6Bg6RxOT4BySQbeg0pKgVivCJp0l9rAXK/deRMoIKc3cs6bpubJi5hMmyA3B61ejUN3Fwy70ddbnPT04XOMJBs04ngkwwfTE1/e7FqSymymhW812WmrxKKkkRgVPEVGJWvs6ofSDAScA7VtKQ+BzJozQTFksO0pxqXL9VOH4gxdQWw8UJO26lS+NnkRBHq+wDhqU0Zy/cgo0sKJ3VOijKL/C6jYxKi2WcG97I/vROs7hWGwrR/XJXot63 rlecellier@ombre"
+    repos: []
+    installers: []
+sudo_users:
+  - rlecellier

@@ -1,0 +1,9 @@
+---
+- name: Setup some fancy configuration
+  hosts: all
+  roles:
+    # - bash
+    # - vim
+    - git
+    # @TODO
+    # - screen

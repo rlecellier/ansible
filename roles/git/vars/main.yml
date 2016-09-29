@@ -1,0 +1,29 @@
+---
+
+git_configuration:
+  - name: color.ui
+    value: true
+  - name: core.editor
+    value: vim
+  - name: core.pager
+    value: more
+  - name: core.whitespace
+    value: trailing-space,space-before-tab,indent-with-non-tab
+
+git_aliases: []
+  # - name: st
+  #   value: status
+  # - name: ci
+  #   value: commit
+  # - name: st
+  #   value: status
+  # # - name: lg
+  # #   value: "log --graph --date=relative --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset'"
+  # - name: oops
+  #   value: "commit --amend --no-edit"
+  # - name: co
+  #   value: checkout
+  # - name: br
+  #   value: branch
+  # - name: last
+  #   value: log -5 HEAD

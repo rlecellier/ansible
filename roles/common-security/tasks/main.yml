@@ -1,5 +1,0 @@
----
-
-- include: ssh.yml
-- include: ufw.yml
-- include: fail2ban.yml

@@ -3,5 +3,10 @@
 - name: Ensure git is the latest version
   apt: name=git update_cache=yes
 
-- name: Set git global configuration
-  script: "{{ role_path }}/files/git-config.sh"
+# - name: Set git global configuration
+#   git_config: name={{ item.name }} scope={{ item.scope|default('global') }} value={{ item.value }}
+#   with_items: "{{ git_configuration|default([]) }}"
+
+- name: Set git global aliases
+  git_config: name="alias.{{ item.name }}"" scope={{ item.scope | default(global) }} value={{ item.value }}
+  with_items: "{{ git_aliases | default([]) }}"

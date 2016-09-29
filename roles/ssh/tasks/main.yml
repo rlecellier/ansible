@@ -1,0 +1,41 @@
+---
+
+- name: ensure ssh is the latest version
+  apt: name=ssh update_cache=yes
+
+- name: Copy ssh banner
+  copy:
+    src=issue.ssh
+    dest=/etc/issue.ssh
+    owner=root
+    group=root
+    mode=0644
+
+- name: Configure sshd settings
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    regexp="^{{ item.name }}"
+    line="{{ item.name }} {{ item.value }}"
+    state=present
+  with_items: "{{ sshd_config|default([]) }}"
+  notify:
+    - restart sshd
+
+- name: Remove certain sshd settings
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    regexp=" {{ item }} "
+    state=absent
+  with_items: "{{ sshd_config_remove|default([]) }}"
+  notify:
+    - restart sshd
+
+- name: Remove insufficient moduli settings
+  lineinfile:
+    dest=/etc/ssh/moduli
+    regexp=" {{ item }} "
+    line="{{ item }}"
+    state=absent
+  with_items: "{{ sshd_moduli_remove|default([]) }}"
+  notify:
+    - restart sshd

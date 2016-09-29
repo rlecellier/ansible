@@ -1,4 +1,21 @@
+# ignore configuration
+ansible.cfg
+hosts
+
+# ignore variables
 group_vars/*
 host_vars/*
-roles/*/vars
+roles/vars/main.yml
+
+# ignore logs
 log/ansible.log
+
+# ignore main playbook files
+playbooks/bootstrap.yml
+playbooks/fancy.yml
+playbooks/mailserver.yml
+playbooks/webserver.yml
+playbooks/databases.yml
+playbooks/monitoring.yml
+playbooks/webservices.yml
+playbooks/seedbox.yml

@@ -1,0 +1,6 @@
+---
+# personal file for common-apt
+# have to be in .gitignor if in a git repository
+
+vim_users:
+  - rlecellier

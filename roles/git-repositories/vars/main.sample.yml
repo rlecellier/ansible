@@ -1,0 +1,18 @@
+---
+# defaults file for bootstrap
+groups:
+  - sudo
+users:
+  - name: "my_user_login"
+    comment: 'Firstname Lastname'
+    groups:
+      - 'adm'
+      - 'sudo'
+    shell: "/bin/bash"
+    password: "my_awesome_password"
+    ssh_key:
+      - "ssh-rsa ... my_user_login@host"
+    repos: []
+    installers: []
+sudo_users:
+  - rlecellier

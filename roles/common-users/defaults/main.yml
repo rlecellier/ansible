@@ -1,7 +1,0 @@
----
-# defaults file for bootstrap
-common_users_groups:
-  - git
-  - sudo
-common_users_users: []
-common_users_sudo_users: []
