@@ -29,7 +29,7 @@
     owner=root
     group=root
     mode=0644
-  when: not check_mode and current_zone.stdout != "{{ timezone }}"
+  when: current_zone.stdout != "{{ timezone }}"
   notify:
     - update timezone
   tags:

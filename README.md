@@ -30,11 +30,12 @@ mv vars/main.sample.yml vars/main.yml
 Then you need choose your configuration by editing variables values.
 
 ##### Finaly you just have to execute the playbook
-remove --check in ordre to apply changes
+remove --check and set check_mode=false in ordre to apply changes
+note: i had to use check_mode var cause ansible_check_mode is undefined. Need help :)
 
 ```bash
 cd ~/ansible_playbooks
-ansible-playbook bootstrap/main.yml --check
+ansible-playbook bootstrap/main.yml --check --extra_vars"check_mode=true"
 ```
 
 ##### Enjoy your easy installations

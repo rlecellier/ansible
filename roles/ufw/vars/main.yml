@@ -1,7 +1,8 @@
 ---
-check_mode: true
+check_mode: false
 
 ufw_tcp_allow:
   - 22 # ssh
   - 80 # http
   - 443 # https
+  - 8000 # usefull to quicky run a website/service

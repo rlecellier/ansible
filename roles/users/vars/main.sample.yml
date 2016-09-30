@@ -1,6 +1,6 @@
 ---
 # defaults file for bootstrap
-groups:
+common_groups:
   - sudo
 users:
   - name: "my_user_login"

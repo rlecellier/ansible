@@ -1,5 +1,5 @@
 ---
 
-check_mode: true
+check_mode: false
 grub_settings: []
 timezone: Europe/Paris

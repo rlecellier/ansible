@@ -1,4 +1,5 @@
 ---
+
 - name: Boostrap all servers
   hosts: all
 

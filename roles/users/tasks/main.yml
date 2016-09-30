@@ -4,16 +4,24 @@
   group:
     name={{ item }}
     state=present
-  with_items: "{{ groups|default([]) }}"
+  with_items: "{{ common_groups|default([]) }}"
 
-- name: Add users
-  user:
-    name={{ item.name }}
-    comment="{{ item.comment }}"
-    shell={{ item.shell }}
-    groups={{ ",".join(item.groups) }}
-    state=present
+- name: Lookup for existing users
+  action: shell /usr/bin/getent passwd {{ item.name }} | /usr/bin/wc -l | tr -d ' '
+  register: users_exists
+  changed_when: false
   with_items: "{{ users|default([]) }}"
+
+- name: Add users (if not already exists)
+  user:
+    name={{ item.1.name }}
+    comment="{{ item.1.comment }}"
+    shell={{ item.1.shell }}
+    append=yes
+    groups={{ ",".join(item.1.groups) }}
+    state=present
+  when: "{{ users_exists.results[item[0]].stdout }} != 1"
+  with_indexed_items: "{{ users|default([]) }}"
 
 - name: Add public SSH authorized keys per user
   authorized_key:
